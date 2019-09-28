@@ -1,6 +1,6 @@
 {
   "name": "expo-get-image",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A package that helps you get images quickly from Camera and ImagePicker",
   "main": "index.js",
   "scripts": {
