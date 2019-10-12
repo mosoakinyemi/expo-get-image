@@ -6,10 +6,18 @@
   "scripts": {
     "test": "echo \"No test specified\""
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mosoakinyemi/expo-get-image.git"
+  },
+  "homepage": "https://github.com/mosoakinyemi/expo-get-image.git#readme",
   "keywords": [
     "Expo",
     "ImagePicker",
-    "Camera"
+    "Camera",
+    "Images",
+    "Git",
+    "React-Native"
   ],
   "author": "Akinyemi Mosolasi",
   "license": "ISC"
