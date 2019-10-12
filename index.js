@@ -1,16 +1,16 @@
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
-import { MyIcon, Text } from '../../App'
+import { View, Text, TouchableOpacity,Dimensions,StyleSheet} from 'react-native'
+import { Ionicons ,MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
-import { Camera } from 'expo-camera';
+import { Camera } from 'expo-camera'
 
 const deviceWidth = Dimensions.get('window').width;
 const deviceHeight = Dimensions.get('window').height;
-const rem = deviceWidth/rem
+const rem = deviceWidth/380
 
-export default class CameraView extends React.PureComponent {
+export default class App extends React.PureComponent {
 
     
   state = {
@@ -42,14 +42,16 @@ export default class CameraView extends React.PureComponent {
     ) {
       alert('Camera permission not granted')
     }
+    else{
     this.setState({ openCamera: true, addingImage: false })
+    }
   }
 
   snap = async () => {
     if (this.camera) {
       let result = await this.camera.takePictureAsync()
       this.setState({ openCamera: false })
-      this.props.onSuccess(result);
+      this.props.onSuccess(result); 
       this.onCancel();
     }
      else {
@@ -59,7 +61,7 @@ export default class CameraView extends React.PureComponent {
   }
 
   changeCamera = () => {
-    type = this.state.type
+    var type = this.state.type
     if (type === Camera.Constants.Type.back) {
       this.setState({ type: Camera.Constants.Type.front })
     } else {
@@ -106,27 +108,24 @@ export default class CameraView extends React.PureComponent {
             </View>
           </View>
         {
-          this.state.openCamera && this.state.hasCameraPermission && (
+          this.state.openCamera &&
+           (this.state.hasCameraPermission !==false || this.state.hasCameraPermission !==null) && (
           <View style={styles.CameraContainer}>
-            <Camera
+             <Camera
               style={styles.CameraStyles}
               type={this.state.type}
               ratio='4:3'
               ref={ref => {
                 this.camera = ref
               }}
-            >
+            > 
               <View style={styles.cameraControls}>
                 <TouchableOpacity
                   activeOpacity={0.7}
                   style={styles.closeCameraButton}
                   onPress={() =>this.onCancel() }
                 >
-                  <MyIcon
-                    name='cancel'
-                    size={25*rem}
-                    color='red'
-                  />
+                   <MaterialIcons name="close"  size={25*rem} color="red" />
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -134,11 +133,8 @@ export default class CameraView extends React.PureComponent {
                   style={styles.cameraButton}
                   onPress={() => this.snap()}
                 >
-                  <MyIcon
-                    name='snap'
-                    size={30*rem}
-                    color='white'
-                  />
+                   <MaterialIcons name="camera"  size={50*rem} color="white" />
+
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -146,14 +142,10 @@ export default class CameraView extends React.PureComponent {
                   style={styles.changeCameraButton}
                   onPress={() => this.changeCamera()}
                 >
-                  <MyIcon
-                    name='switch2'
-                    size={25*rem}
-                    color='white'
-                  />
+                  <Ionicons name="md-reverse-camera"  size={25*rem} color="#fff" />
                 </TouchableOpacity>
               </View>
-            </Camera>
+            </Camera> 
           </View>
         )}
       </View>
@@ -161,7 +153,7 @@ export default class CameraView extends React.PureComponent {
   }
 }
 
-const styles = EStyleSheet.create({
+const styles = StyleSheet.create({
   mainContainer:{
     flex: 1, 
     backgroundColor: 'white',
@@ -171,7 +163,7 @@ const styles = EStyleSheet.create({
   },
   changeCameraButton: {
     borderColor: 'white',
-    borderWidth: '3rem',
+    borderWidth:3*rem,
     height:50*rem,
     width: 50*rem,
     borderRadius: 25*rem,
@@ -180,7 +172,7 @@ const styles = EStyleSheet.create({
     marginRight: 30*rem
   },
   addButtonText: {
-    color: blue,
+    color: 'blue',
     fontSize: 18*rem,
     fontWeight: '400',
     textAlign: 'center'
@@ -202,6 +194,7 @@ const styles = EStyleSheet.create({
   addExtraText: {
     alignSelf: 'center',
     fontSize: 17*rem,
+    // paddingVertical:15*rem,
     color: '#555555'
   },
   modalButton: {
@@ -225,16 +218,6 @@ const styles = EStyleSheet.create({
     padding: 10*rem,
     width: '70%',
     alignItems: 'center'
-  },
-  closeCameraButton: {
-    borderColor: 'white',
-    borderWidth: 3*rem,
-    height: 50*rem,
-    width: 50*rem,
-    borderRadius: 25*rem,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 35*rem
   },
   container: {
     flex: 1
@@ -261,10 +244,11 @@ const styles = EStyleSheet.create({
     marginRight: 30*rem
   },
   cameraButton: {
-    backgroundColor: '#ffa500',
-    height: 50*rem,
-    width: 50*rem,
-    borderRadius: 25*rem,
+    borderColor: 'white',
+    borderWidth: 3*rem,
+     height: 75*rem,
+    width: 75*rem,
+    borderRadius: 40*rem,
     justifyContent: 'center',
     alignItems: 'center'
   },
